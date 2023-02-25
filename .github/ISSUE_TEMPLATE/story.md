@@ -1,7 +1,7 @@
 ---
 name: Story
 about: Issues for user stories
-title: ''
+title: As a __, I want to __, so I can __
 labels: story
 assignees: ''
 
@@ -9,6 +9,8 @@ assignees: ''
 
 ### User story
 As a ..., I want to ..., so I can ...
+
+*Ideally, this is in the issue title, but if not, you can put it here. If so, delete this section.*
 
 ### Acceptance Criteria
 
