@@ -1,0 +1,43 @@
+version: "3"
+
+tasks:
+  run-app:
+    deps: [run-pocketbase, run-frontend]
+
+  run-pocketbase:
+    dir: ./pocketbase
+    cmds:
+      - go run main.go serve # default port 8090
+
+  run-pocketbase-debug:
+    dir: ./pocketbase
+    cmds:
+      - go run main.go serve --debug # default port 8090
+
+  run-pocketbase-prod:
+    dir: ./pocketbase
+    cmds:
+      - go run main.go serve --http="0.0.0.0:8090"
+
+  run-frontend:
+    dir: ./app
+    cmds:
+      - npm run dev
+
+  frontend-install:
+    dir: ./app
+    preconditions:
+      - test -f package.json
+    cmds:
+      - npm install
+
+  clean-pb:
+    dir: ./pocketbase
+    cmds:
+      - rm -rf ./pb_data
+
+  # Cleans pb_data and runs pocket-base starting from scratch
+  clean-run-pocket-base:
+    cmds:
+      - task: clean-pb
+      - task: run-pocketbase
