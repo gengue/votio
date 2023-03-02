@@ -10,10 +10,12 @@ import {
 	Html,
 	Meta,
 	Routes,
+	Route,
 	Scripts,
 	Title,
 } from "solid-start";
 import "./root.css";
+import Settings from "./routes/settings";
 
 export default function Root() {
 	const location = useLocation();
