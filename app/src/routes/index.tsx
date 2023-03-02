@@ -1,4 +1,4 @@
-import { createSignal, For, Show } from 'solid-js';
+import { createSignal, Show } from 'solid-js';
 import { Categorie, CategorieItem } from '../types/index';
 import { CATEGORIES_MOCK } from '~/mockData';
 import SideMenu from '~/components/SideMenu';
