@@ -31,13 +31,12 @@ func main() {
     })
 
     app.OnBeforeServe().Add(func(e *core.ServeEvent) error {
-        println("checking if default admin exists...")
+        email := goDotEnvVariable("DEFAULT_ADMIN_EMAIL")
 
-        record, err := app.Dao().FindFirstRecordByData("posts", "slug", "emojis-support")
+        _, err := app.Dao().FindAdminByEmail(email)
         if err != nil {
-            email := goDotEnvVariable("DEFAULT_ADMIN_EMAIL")
+            println("Default admin not found. creating one...")
             pwd := goDotEnvVariable("DEFAULT_ADMIN_PASSWORD")
-
             admin := &models.Admin{ Email: email }
             admin.SetPassword(pwd)
 
@@ -46,15 +45,13 @@ func main() {
                 println("Error creating admin")
                 log.Fatal(admErr)
             } else {
-                println("Admin created")
+                println("Admin created!")
                 return nil;
             }
 
             log.Fatal(err)
             return err;
         }
-        println("record", &record)
-        println("admin found...skiping...")
 
         return nil
     })
