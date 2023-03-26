@@ -7,7 +7,6 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/core"
-	"github.com/pocketbase/pocketbase/models"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 
 	_ "github.com/gengue/votio/pocketbase/migrations"
@@ -35,29 +34,28 @@ func main() {
 
         record, err := app.Dao().FindFirstRecordByData("posts", "slug", "emojis-support")
         if err != nil {
-            email := goDotEnvVariable("DEFAULT_ADMIN_EMAIL")
-            pwd := goDotEnvVariable("DEFAULT_ADMIN_PASSWORD")
 
-            admin := &models.Admin{ Email: email }
-            admin.SetPassword(pwd)
-
-            admErr := app.Dao().SaveAdmin(admin)
-            if admErr != nil {
-                println("Error creating admin")
-                log.Fatal(admErr)
-            } else {
-                println("Admin created")
-                return nil;
-            }
-
+        email := goDotEnvVariable("DEFAULT_ADMIN_EMAIL")
+        username := goDotEnvVariable("DEFAULT_ADMIN_USERNAME")
+        pass := goDotEnvVariable("DEFAULT_ADMIN_PASSWORD")
+        println(email, username, pass)
             log.Fatal(err)
             return err;
         }
         println("record", &record)
-        println("admin found...skiping...")
 
         return nil
     })
+    
+    // record, err := app.Dao().FindAdminByEmail("admin@votio.com")
+    // if err != nil {
+    //   log.Fatal(err)
+    //   return
+    // }
+    //
+    // println("record")
+    // println(record)
+
 
     if err := app.Start(); err != nil {
         log.Fatal(err)
